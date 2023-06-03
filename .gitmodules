@@ -1,3 +1,6 @@
 [submodule "lib/free_flying_bff_model"]
 	path = lib/free_flying_bff_model
 	url = https://github.com/sduess/free_flying_bff_model
+[submodule "lib/sharpy"]
+	path = lib/sharpy
+	url = https://github.com/ImperialCollegeLondon/sharpy
