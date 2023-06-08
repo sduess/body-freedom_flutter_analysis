@@ -11,12 +11,15 @@ case_name = 'bff_test_cs'
 
 
 # Trim values for SuperFLEXOP
-trim_values = {'alpha': np.deg2rad( 1.5218), #6.796482976011756182e-03,
-                'delta': np.deg2rad(0), #1.784287512500099069e-03,
-                'thrust':  -0.0090, #10,  #2.290077074834680371e+00
+trim_values = {'alpha': 4.792613660659094527e-02,
+                'delta': -2.664350980482567688e-01,
+                'thrust': -1.325090000148728686e-01,
                 }
 
-linearize = True
+
+
+
+linearize = False
 use_trim = False
 use_rom = False 
 convection_scheme = 2
@@ -32,6 +35,8 @@ flow = [
         'StaticCoupled',
         'AeroForcesCalculator',
         'StaticTrim',     
+        'AerogridPlot',
+        'BeamPlot',
         'DynamicCoupled',
         'Modal',
         'LinearAssembler',
@@ -46,6 +51,9 @@ else:
 
 if 'LinearAssembler' in flow:
     unsteady_force_distribution = False
+else:
+    unsteady_force_distribution = True
+     
 # Set cruise parameter
 alpha = trim_values['alpha'] # rad
 u_inf = 15 # 5- 20 m/s
@@ -65,7 +73,8 @@ n_elem_multiplier = 4
 # Init FLEXOP Model
 bff_model = BFF_Flying_Wing(case_name, cases_route, output_route)
 bff_model.init_aeroelastic(m=num_chord_panels,
-                           n_elem_multiplier=n_elem_multiplier)
+                           n_elem_multiplier=n_elem_multiplier,
+                           init_cs_deflection=cs_deflection_initial)
 bff_model.structure.set_thrust(thrust)
 #  Simulation settings
 CFL = 1
